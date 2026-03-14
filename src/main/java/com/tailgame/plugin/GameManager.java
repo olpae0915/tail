@@ -214,6 +214,14 @@ public class GameManager {
         // 일직선 파티클 생성
         spawnDirectionParticle(player, targetPlayer);
         player.sendMessage(ChatColor.AQUA + "타겟 방향을 표시합니다!");
+
+        // 다이아몬드 1개 제거
+        org.bukkit.inventory.ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand.getAmount() > 1) {
+            hand.setAmount(hand.getAmount() - 1);
+        } else {
+            player.getInventory().setItemInMainHand(null);
+        }
     }
 
     private void spawnDirectionParticle(Player from, Player to) {
@@ -370,6 +378,20 @@ public class GameManager {
                     applyHealthNerf(member);
                 }
                 member.sendMessage(catcherTeam.getDisplayName() + ChatColor.WHITE + "팀에 흡수되었습니다!");
+            }
+        }
+
+        // 흡수된 팀을 타겟으로 가리키던 팀 → 다음 타겟으로 연결
+        for (Team t : teams) {
+            if (t.getTargetTeam() == caughtTeam) {
+                t.setTargetTeam(caughtTeam.getTargetTeam());
+                for (UUID uuid : t.getMemberUUIDs()) {
+                    Player p = Bukkit.getPlayer(uuid);
+                    if (p != null) {
+                        p.sendMessage(ChatColor.GOLD + "새 타겟: " + caughtTeam.getTargetTeam().getDisplayName());
+                    }
+                }
+                break;
             }
         }
 
