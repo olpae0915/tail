@@ -1,0 +1,10 @@
+name: TailGame
+version: 1.0.0
+main: com.tailgame.plugin.TailGamePlugin
+api-version: 1.21
+description: 꼬리잡기 미니게임 플러그인
+authors: [Claude]
+commands:
+  tailgame:
+    description: 꼬리잡기 게임 명령어
+    usage: /tailgame <start|stop|join>
