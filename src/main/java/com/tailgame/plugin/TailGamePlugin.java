@@ -1,3 +1,8 @@
+ package com.tailgame.plugin;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class TailGamePlugin extends JavaPlugin {
     private static TailGamePlugin instance;
     private GameManager gameManager;
 
